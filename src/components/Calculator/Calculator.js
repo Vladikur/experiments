@@ -19,6 +19,16 @@ function Calculator() {
     setDisplayValue("0")
   }
 
+  function plusOrMinus () {
+    if (displayValue.length === 8 || displayValue === "0") {
+      setDisplayValue(displayValue)
+    } else if(displayValue.includes('-')) {
+      setDisplayValue(displayValue.substr(1))
+    } else {
+      setDisplayValue('-' + displayValue)
+    }
+  }
+
   return (
     <div className="calculator">
       <div className="calculator__screen">
@@ -26,7 +36,7 @@ function Calculator() {
       </div>
       <div className="calculator__buttons">
         <button onClick={resetDisplayValue} name="AC" className="calculator__button" type="button">AC</button>
-        <button name="plus or minus" className="calculator__button" type="button">􀅺</button>
+        <button onClick={plusOrMinus} name="plus or minus" className="calculator__button" type="button">􀅺</button>
         <button name="percent" className="calculator__button" type="button">􀘾</button>
         <button name="division" className="calculator__button" type="button">􀅿</button>
         <button onClick={changeDisplayValue} name="7" className="calculator__button" type="button">7</button>
