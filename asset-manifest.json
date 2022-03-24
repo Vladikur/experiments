@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/experiments/static/css/main.208e2b02.css",
+    "main.js": "/experiments/static/js/main.5316dae4.js",
+    "static/js/787.03cf4e38.chunk.js": "/experiments/static/js/787.03cf4e38.chunk.js",
+    "static/media/SF-Compact-Rounded-Regular.ttf": "/experiments/static/media/SF-Compact-Rounded-Regular.3e9a80bfed2a97a23c6f.ttf",
+    "index.html": "/experiments/index.html",
+    "main.208e2b02.css.map": "/experiments/static/css/main.208e2b02.css.map",
+    "main.5316dae4.js.map": "/experiments/static/js/main.5316dae4.js.map",
+    "787.03cf4e38.chunk.js.map": "/experiments/static/js/787.03cf4e38.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.208e2b02.css",
+    "static/js/main.5316dae4.js"
+  ]
+}
