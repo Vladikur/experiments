@@ -70,3 +70,8 @@
   line-height: 60px;
   color: #EFDA92;
 }
+
+.calculator__button_type_pressed {
+  box-shadow: none;
+  transform: scale(0.93);
+}
