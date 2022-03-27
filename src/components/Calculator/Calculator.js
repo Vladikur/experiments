@@ -2,13 +2,11 @@ import React, { useState }  from 'react';
 
 function Calculator() {
 
-  const [displayValue, setDisplayValue] = useState('0')
-  const [firstNumber, setFirstNumber] = useState(0)
+  const [displayValue, setDisplayValue] = useState("0")
+  const [secondValue, setSecondValue] = useState("0")
+  const [currentOperation, setCurrentOperation] = useState("none")
+  const [lastOperation, setLastOperation] = useState("none")
   const [newNumber, setNewNumber] = useState(false)
-  const [division, setDivision] = useState(false)
-  const [multiplication, setMultiplication] = useState(false)
-  const [subtraction, setSubtraction] = useState(false)
-  const [addition, setAddition] = useState(false)
 
   function changeDisplayValue (e) {
 
@@ -34,12 +32,10 @@ function Calculator() {
 
   function resetDisplayValue () {
     setDisplayValue("0")
-    setFirstNumber(0)
+    setSecondValue("0")
     setNewNumber(false)
-    setDivision(false)
-    setMultiplication(false)
-    setSubtraction(false)
-    setAddition(false)
+    setCurrentOperation("none")
+    setLastOperation("none")
   }
 
   function plusOrMinus () {
@@ -52,6 +48,72 @@ function Calculator() {
     }
   }
 
+  function operationSymbol (e) {
+    const { name } = e.target
+    setCurrentOperation(name)
+    setNewNumber(true)
+    setSecondValue(displayValue)
+  }
+
+  function percentOperation () {
+    if (secondValue !== 0) {
+      const displayNumber = Number(displayValue)
+      const hundredPercent = Number(secondValue)
+      const result = (hundredPercent / 100) * displayNumber
+      setDisplayValue(result)
+    }
+  }
+
+  function doOperation (operation, firstNumber, secondNumber) {
+
+    let result
+
+    if (operation === "division") {
+      result = firstNumber / secondNumber
+    }
+    if (operation === "multiplication") {
+      result = firstNumber * secondNumber
+    }
+    if (operation === "addition") {
+      result = firstNumber + secondNumber
+    }
+    if (operation === "subtraction") {
+      result = firstNumber - secondNumber
+    }
+
+    return result
+  }
+
+  function toString (number) {
+    const string = String(number)
+    if (string.length > 8) {
+      return string.substr(0, 8)
+    } else {
+      return string
+    }
+  }
+
+  function equalsOperation () {
+
+    let result 
+
+    if (currentOperation !== "equals") {
+      const firstNumber = Number(secondValue)
+      const secondNumber = Number(displayValue)
+      result = doOperation(currentOperation, firstNumber, secondNumber)
+      setLastOperation(currentOperation)
+      setSecondValue(displayValue)
+      setCurrentOperation("equals")
+    } else {
+      const firstNumber = Number(displayValue)
+      const secondNumber = Number(secondValue)
+      result = doOperation(lastOperation, firstNumber, secondNumber)
+    }
+
+    setDisplayValue(toString(result))
+
+  }
+
   function onMouseDown (e) {
     const currentClassName = e.target.className
     e.target.className = `${currentClassName} calculator__button_type_pressed`
@@ -59,81 +121,8 @@ function Calculator() {
 
   function onMouseUp (e) {
     const currentClassName = e.target.className
-    e.target.className = `${currentClassName.replace(/................................$/, '')}`
+    e.target.className = `${currentClassName.substr(0, 18)}`
   }
-
-  function divisionOperation (e) {
-    setDivision(true)
-    setNewNumber(true)
-    setMultiplication(false)
-    setSubtraction(false)
-    setAddition(false)
-    setFirstNumber(Number(displayValue))
-  }
-
-  function multiplicationOperation (e) {
-    setDivision(false)
-    setNewNumber(true)
-    setMultiplication(true)
-    setSubtraction(false)
-    setAddition(false)
-    setFirstNumber(Number(displayValue))
-  }
-
-  function additionOperation (e) {
-    setDivision(false)
-    setNewNumber(true)
-    setMultiplication(false)
-    setSubtraction(false)
-    setAddition(true)
-    setFirstNumber(Number(displayValue))
-  }
-
-  function subtractionOperation (e) {
-    setDivision(false)
-    setNewNumber(true)
-    setMultiplication(false)
-    setSubtraction(true)
-    setAddition(false)
-    setFirstNumber(Number(displayValue))
-  }
-
-  function percentOperation (e) {
-    if (firstNumber !== 0) {
-      const displayNumber = Number(displayValue)
-      const hundredPercent = firstNumber
-      const result = (hundredPercent / 100) * displayNumber
-      setDisplayValue(result)
-    }
-  }
-
-  function equalsOperation () {
-    let secondNumber = Number(displayValue)
-    let result 
-    if (division) {
-      result = firstNumber / secondNumber
-    }
-    if (multiplication) {
-      result = firstNumber * secondNumber
-    }
-    if (addition) {
-      result = firstNumber + secondNumber
-    }
-    if (subtraction) {
-      result = firstNumber - secondNumber
-    }
-
-    console.log(String(result).length)
-
-    if (String(result).length > 8) {
-      setDisplayValue(String(result).substr(0, 8))
-    } else {
-      setDisplayValue(String(result))
-    }
-    
-  }
-
-
 
   return (
     <div className="calculator">
@@ -144,19 +133,19 @@ function Calculator() {
         <button onClick={resetDisplayValue} name="AC" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>AC</button>
         <button onClick={plusOrMinus} name="plus or minus" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅺</button>
         <button onClick={percentOperation} name="percent" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀘾</button>
-        <button onClick={divisionOperation} name="division" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅿</button>
+        <button onClick={operationSymbol} name="division" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅿</button>
         <button onClick={changeDisplayValue} name="7" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>7</button>
         <button onClick={changeDisplayValue} name="8" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>8</button>
         <button onClick={changeDisplayValue} name="9" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>9</button>
-        <button onClick={multiplicationOperation} name="multiplication" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅾</button>
+        <button onClick={operationSymbol} name="multiplication" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅾</button>
         <button onClick={changeDisplayValue} name="4" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>4</button>
         <button onClick={changeDisplayValue} name="5" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>5</button>
         <button onClick={changeDisplayValue} name="6" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>6</button>
-        <button onClick={subtractionOperation} name="subtraction" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅽</button>
+        <button onClick={operationSymbol} name="subtraction" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅽</button>
         <button onClick={changeDisplayValue} name="1" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>1</button>
         <button onClick={changeDisplayValue} name="2" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>2</button>
         <button onClick={changeDisplayValue} name="3" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>3</button>
-        <button onClick={additionOperation} name="addition" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅼</button>
+        <button onClick={operationSymbol} name="addition" className="calculator__button" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀅼</button>
         <button onClick={changeDisplayValue} name="0" className="calculator__button calculator__button_type_zero" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>0</button>
         <button onClick={changeDisplayValue} name="." className="calculator__button" type="button"  onMouseDown={onMouseDown}onMouseUp={onMouseUp}>,</button>
         <button onClick={equalsOperation} name="equals" className="calculator__button calculator__button_type_equals" type="button" onMouseDown={onMouseDown}onMouseUp={onMouseUp}>􀆀</button>
