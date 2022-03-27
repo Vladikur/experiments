@@ -32,8 +32,6 @@ function Calculator() {
     }
   }
 
-  console.log(newNumber)
-
   function resetDisplayValue () {
     setDisplayValue("0")
     setFirstNumber(0)
@@ -45,7 +43,7 @@ function Calculator() {
   }
 
   function plusOrMinus () {
-    if (displayValue.length === 8 || displayValue === "0") {
+    if ((displayValue.length === 8 || displayValue === "0") && !displayValue.includes('-')) {
       setDisplayValue(displayValue)
     } else if(displayValue.includes('-')) {
       setDisplayValue(displayValue.substr(1))
@@ -124,7 +122,15 @@ function Calculator() {
     if (subtraction) {
       result = firstNumber - secondNumber
     }
-    setDisplayValue(result)
+
+    console.log(String(result).length)
+
+    if (String(result).length > 8) {
+      setDisplayValue(String(result).substr(0, 8))
+    } else {
+      setDisplayValue(String(result))
+    }
+    
   }
 
 
