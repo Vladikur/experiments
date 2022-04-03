@@ -121,7 +121,7 @@ function Calculator() {
 
   function onMouseUp (e) {
     const currentClassName = e.target.className
-    e.target.className = `${currentClassName.substr(0, 18)}`
+    e.target.className = `${currentClassName.replace(/................................$/, '')}`
   }
 
   return (
