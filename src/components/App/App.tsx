@@ -1,11 +1,9 @@
 import React from 'react';
-import Calculator from '../Calculator/Calculator';
-import YandexVision from '../YandexVision/YandexVision';
+import Calculator from '../Calculator/Calculator.js';
 
 function App() {
   return (
     <div className="app">
-      <YandexVision/>
       <Calculator/>
     </div>
   );

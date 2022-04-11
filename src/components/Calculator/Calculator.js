@@ -65,23 +65,21 @@ function Calculator() {
   }
 
   function doOperation (operation, firstNumber, secondNumber) {
-
-    let result
-
     if (operation === "division") {
-      result = firstNumber / secondNumber
+      return firstNumber / secondNumber
     }
     if (operation === "multiplication") {
-      result = firstNumber * secondNumber
+      return firstNumber * secondNumber
     }
     if (operation === "addition") {
-      result = firstNumber + secondNumber
+      return firstNumber + secondNumber
     }
     if (operation === "subtraction") {
-      result = firstNumber - secondNumber
+      return firstNumber - secondNumber
     }
-
-    return result
+    if (operation === "none") {
+      return 0
+    }
   }
 
   function toString (number) {
