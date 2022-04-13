@@ -119,7 +119,10 @@ function Calculator() {
 
   function onMouseUp (e) {
     const currentClassName = e.target.className
-    e.target.className = `${currentClassName.replace(/................................$/, '')}`
+    console.log(currentClassName.endsWith('calculator__button_type_pressed'))
+    if (currentClassName.endsWith('calculator__button_type_pressed')) {
+      e.target.className = `${currentClassName.replace(/................................$/, '')}`
+    }
   }
 
   return (
